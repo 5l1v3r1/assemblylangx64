@@ -1,0 +1,810 @@
+ apt-get install nasm build-essential
+
+
+ 
+nasm portbind.nasm -f elf64 -o portbind.o 
+  ls -l
+  ld portbind.o -o portbind
+  ls -l
+ ./portbind 
+
+--------------------
+
+General Purpoise Registers :
+
+
+there are 16 registers in x86_64 bit :
+
+first four are 
+
+RAX 
+RBX  
+RCX   
+RDX
+
+all have 64 capacity :
+
+Ex: for RAX
+
+0 to 8 -> AL
+0 to 16 -> AX
+0 to 32 -> EAX
+0 to 64 -> RAX
+8 to 16 -> AH
+
+smiliar to all rbx etc
+
+
+  ================ rax (64 bits)
+          ======== eax (32 bits)
+              ====  ax (16 bits)
+              ==    ah (8 bits)
+                ==  al (8 bits)
+
+
+--------------------------
+
+SYSTEM CALL SYNTAX:
+
+RAX -> SYS CALL NO
+
+RDI -> ALL TAKE ARGUMENTS TILL LAST R9
+
+RSI
+
+RDX
+
+R10
+
+R8
+
+R9
+
+-------------------
+
+cat -n /usr/include/x86_64-linux-gnu/asm/unistd_64.h 
+
+for syscall numbers xD
+
+----------------------------------
+
+objdump -M intel -d script
+
+--------------------------------
+
+variables :
+
+byte - 8
+word - 16
+d word - 32
+quard word - 64
+d q w - 128 bits
+
+Directive	Purpose	Storage Space
+DB	Define Byte	allocates 1 byte
+DW	Define Word	allocates 2 bytes
+DD	Define Doubleword	allocates 4 bytes
+DQ	Define Quadword	allocates 8 bytes
+
+
+
+NASM :
+
+
+message db 0xAA,0xBB,0xCC,0xDD
+mov rax, message -> this will moves address into rax
+mov rax, [message] -> using [] will move value into rax of all define bytes.
+
+
+Defining data in NASM:
+
+
+db 0x55 ; define one byte
+db 0x55, 0x56,0x57 ; 3 here
+db 'a',0x55 ; char here ok
+db 'hello',13,10,'$'  ; so strings constast ok
+
+
+
+dw 0x1234  ; define word takes 2 bytes 0x34 0x12
+dw 'a' ; 0x61 0x00 (its just a no)
+
+
+dd 0x12345678; 0x78 0x56 0x34 0x12
+dd 1.23435d20 ; floating point const
+
+
+
+
+buffer : resb  64 ; reserve 64 bytes
+wordvar: resw 1 ; reserve a word
+
+
+
+equ ; equals 
+ex:
+
+message db 'Hello World'
+msglen equ $-message ; leng of message
+
+
+
+times 128 db 0XAA ; this is saying to repeat 0xAA 128 times
+
+
+
+-----------------------------------
+
+
+	var1: db 0x11, 0x22
+	var2: dw 0x3344
+	var3: dd 0xaabbccdd
+	var4: dq 0xaabbccdd11223344
+
+
+here we have var1 hold 2 bytes
+so in gdb command :
+
+x/2xb &var1  = x/ is hex , 2xb is 2 bytes from &var1
+
+x/xh &var2 = x/ is hex , xh is half word from &var2 
+
+x/xw &var3 = word
+
+x/xg &var4 = giant
+
+
+
+
+(gdb) info variables 
+All defined variables:
+
+Non-debugging symbols:
+0x00000000006000ec  hello_world
+0x00000000006000fe  var1
+0x0000000000600100  var2
+0x0000000000600102  var3
+0x0000000000600106  var4
+0x000000000060010e  repeat_buffer
+0x000000000060018e  __bss_start
+0x000000000060018e  _edata
+0x0000000000600190  buffer
+0x00000000006001d0  _end
+(gdb) x/2xb &var1
+0x6000fe:	0x11	0x22
+(gdb) x/xh &var2
+0x600100:	0x3344
+(gdb) x/xh &var3
+0x600102:	0xccdd
+(gdb) x/xw &var3
+0x600102:	0xaabbccdd
+(gdb) x/xg &var4
+0x600106:	0xaabbccdd11223344
+(gdb) 
+
+
+
+for looking series of 128 times of 0xAA we can use which we defined in repeat_buffer:
+
+x/128xb &repeat_buffer
+
+ 
+
+
+------------------------------------------------------------------------
+
+Little-endian :
+
+
+0x8877665544332211 
+
+
+Storing :
+
+0   1     ....   7
+
+11   22           88
+
+High-endian is reverse of above : it stores 1st 2 value in 1st memory
+
+
+0  1 1
+
+88  77   etc
+
+
+
+-------------------------------------
+
+
+
+GDB TUI MODE : 
+
+
+     text     user interface
+
+
+ gdb -q ./hello -tui
+
+set diassambley-flavor intel
+
+break _start
+
+run
+
+
+layout asm
+
+layout regs
+
+stepi
+----------------------------------
+
+In Move Data chapter :
+
+there are one important thing :
+
+
+gdb ./movabledata -q -tui
+
+set disassmebly-flavor intel
+break _start
+run
+
+layout asm
+
+layout regs
+
+
+now check asm:
+
+
+movabs : rax -> 0xaaaaaaaabbbbbbbb
+
+now check regs : 
+
+rax have 0 
+
+
+now type : stepi
+
+
+Now in regs :
+
+rax have 0xaaaaaaaabbbbbbbb
+
+
+
+now type : stepi
+
+rax have 0xaaaaaaa , value of eax
+
+
+-------- Now comes the imp part here--
+
+
+next thing we have is al, 0x11  According to intel assembly guide , this will effect only the last value of previous value if we type stepi
+
+
+now again type : stepi
+
+and Notice that
+
+rax  have : 0xaaaaaaaabbbbbb11
+
+only 11 is beign added to last value of rax just for AL only in x64 bit
+
+
+Al,Ah which is short in bytes etc are added to last.
+
+
+---------------------------------
+
+Now come at down
+
+
+mov rdp,rax -> this will add value of rax to rbp in registars
+
+
+
+
+-------------------------------------
+
+Now come to 
+
+mov rsi,[sample2]
+sample2: dq 0x1122334455667788
+
+dq-> Define quadword which is 8 bytes long and 128 bits
+
+
+Now we have
+
+mov rsi,[sample2] -> Which tells that Move sample2 value in rsi
+
+now type stepi
+
+and check rsi value in register 
+
+
+--------------------------------
+
+0x400116 <_start+102>   mov    rax,QWORD PTR ds:0x600174 
+
+
+here we have mov rax, [sample2]
+
+so first think we have find what is 0x600174 from gdb
+
+so do ,
+
+info variables
+
+then check last values 
+
+x/xg &sample2
+
+
+> Now this will mov sample2 value to rax
+
+stepi
+
+
+then we have : 	mov byte [sample], al	
+
+move al value to sample which is in Byte  
+
+
+
+---------------------------------------------
+lea -> load effective address
+
+
+loads address from value:
+
+
+xchg rax , rbz -> Exchange values
+
+---------------------------------------------------
+
+BASICS :
+2nd video ,
+
+
+disablling kernel protection for stack :
+
+
+
+
+./simpledemo 10 20
+
+new terminal
+
+ps -aux | grep simpledemo
+
+cat /proc/PID/maps
+
+<CHECK STACK VALUE>
+
+Stop c program , run again and repeat same process ,
+
+
+We look at how one can use the /proc/PID/maps to peek into the layout of a program's virtual memory and interpret useful things. Also, we show how the Address Space Layout Randomization (ASLR) works in the latest 2.6 kernels and why this is significant from a security point of view. We also show how this can be disabled at runtime if the need be. This video is very important from an code exploitation perspective as it teaches us how to check for the presence of ASLR on a given system. 
+
+
+
+echo 0 > /proc/sys/kernel/randomize_va_space
+
+
+---------------------------------------------------
+
+VIDEO 3 : GDB BASICS :
+
+
+list <NO> : to show the lines of code .
+ex: list 1             this will show lines from 1-10
+press enter then to look for another park
+
+
+gdb ./simpledemo 
+
+list 1
+<ENTER>
+
+
+run 10 20
+
+
+==============================================
+
+NOW BACK TO COURSE :
+
+
+STACK :
+
+
+RSP : Point to top of stack
+High to low
+
+push and pop
+
+
+------------------------
+
+gdb ./stack -q -tui
+
+
+set disassembly-flavor intel
+
+break _start
+
+run
+
+layout asm
+
+layout regs
+
+
+
+define hook-stop     // this will hook $rsp value on command line interface till end , 
+
+x/4xg $rsp               // we are hooking $rsp in 4 giant parts ,this will show 4 stack values in rsp
+end
+
+
+
+stepi
+
+
+--------------------------------------------------------
+
+Arthmetic Operations :
+
+
+FLAGS:
+
+in register groups , there would be a eflags which shows FLAGS Like CF, IF  PF 
+
+CF -> Carry Flag
+
+
+Flag CommandS:
+
+clc -> Clear carry flag
+
+stc -> set Carry flag
+
+cmc -> Complimenting carry flag (Which means removes the Carry flag)
+
+
+adc -> add with carry flag 
+ex:
+
+adc rax,0x1  ; this means add rax with 1 + Carry flag
+
+
+
+sbb -> Substract with borrow
+
+ex: sbb rax,0x4 
+this will substract 4 from rax value + CFLAG i.e 1 , suppose rax is 10
+
+then , 10 - 4 - 1 = 5 
+
+
+inc -> increment
+dec -> decrement
+
+
+---------------------------------------------------------
+
+Logical Operations :
+
+Not : this will flip 0 to 1 and 1 to 0 
+(Here 1 are fffffffffffffff(16 times f)
+(Here 0 are eeeeeeeeeeeeee(16 times e)
+
+
+And :  suppose :
+ex:  
+
+and rbx,rax
+
+here  rbx=0x11111111111  rax=0
+so , rbx=1 rax=0
+
+1 and 0 = 0 
+
+-------------------
+
+OR : 
+ex:
+
+or rbx,rax 
+
+here , rbx=1 or rax=0
+
+ans : 1
+
+---------------------
+
+Learn about XOR Instructions :
+
+The processor supports the following data sizes −
+
+Word: a 2-byte data item
+Doubleword: a 4-byte (32 bit) data item
+Quadword: an 8-byte (64 bit) data item
+Paragraph: a 16-byte (128 bit) area
+Kilobyte: 1024 bytes
+Megabyte: 1,048,576 bytes
+
+------------------------
+
+INC COUNT        ; Increment the memory variable COUNT
+
+MOV TOTAL, 48    ; Transfer the value 48 in the 
+                 ; memory variable TOTAL
+					  
+ADD AH, BH       ; Add the content of the 
+                 ; BH register into the AH register
+					  
+AND MASK1, 128   ; Perform AND operation on the 
+                 ; variable MASK1 and 128
+					  
+ADD MARKS, 10    ; Add 10 to the variable MARKS
+MOV AL, 10       ; Transfer the value 10 to the AL register
+
+------------------------------------
+
+
+
+    Overflow Flag (OF) − It indicates the overflow of a high-order bit (leftmost bit) of data after a signed arithmetic operation.
+
+    Direction Flag (DF) − It determines left or right direction for moving or comparing string data. When the DF value is 0, the string operation takes left-to-right direction and when the value is set to 1, the string operation takes right-to-left direction.
+
+    Interrupt Flag (IF) − It determines whether the external interrupts like keyboard entry, etc., are to be ignored or processed. It disables the external interrupt when the value is 0 and enables interrupts when set to 1.
+
+    Trap Flag (TF) − It allows setting the operation of the processor in single-step mode. The DEBUG program we used sets the trap flag, so we could step through the execution one instruction at a time.
+
+    Sign Flag (SF) − It shows the sign of the result of an arithmetic operation. This flag is set according to the sign of a data item following the arithmetic operation. The sign is indicated by the high-order of leftmost bit. A positive result clears the value of SF to 0 and negative result sets it to 1.
+
+    Zero Flag (ZF) − It indicates the result of an arithmetic or comparison operation. A nonzero result clears the zero flag to 0, and a zero result sets it to 1.
+
+    Auxiliary Carry Flag (AF) − It contains the carry from bit 3 to bit 4 following an arithmetic operation; used for specialized arithmetic. The AF is set when a 1-byte arithmetic operation causes a carry from bit 3 into bit 4.
+
+    Parity Flag (PF) − It indicates the total number of 1-bits in the result obtained from an arithmetic operation. An even number of 1-bits clears the parity flag to 0 and an odd number of 1-bits sets the parity flag to 1.
+
+    Carry Flag (CF) − It contains the carry of 0 or 1 from a high-order bit (leftmost) after an arithmetic operation. It also stores the contents of last bit of a shift or rotate operation.
+
+	
+	=================================================================
+XOR OPERATIONS :	
+	
+0 1    1
+1 0    1 
+1 1    0 
+0 0    0 
+
+
+suppose :    a xor b 
+a = 11111111
+b = 11111110
+----------------
+    00000001
+	
+==========================================================
+
+
+
+-------------------------------------------------------
+======================
+
+BitShifting Operations :
+
+
+shl -> Shift left
+ex:
+(0x20 in decimal is 32)
+
+shl rax,0x20  -> Shift 32 bits from left in rax
+and rax=0xffffffff
+
+shl 0xffffffff, 32 bits(i.e 4 bytes) (ffff= 1 and they are in bytes)i.e total 8 bytes of 1
+
+
+--------------------------
+
+rax=ffffffff00000000
+
+shl  rax,1
+
+ans : fffffffe00000000
+
+(shifted first one to outside and look at eflags now CF hold that 1 value (f))
+
+
+
+shr -> Shift right 
+
+ex: shr rax,1
+
+rax = 0xffffffff
+
+
+ans : 0x7fffffff (removed 1 from right side and put it in CF FLAg in Eflags in registars)
+
+
+Sar -> Shift arthmetic right
+
+sar rax,1
+
+rax=0xffffffff
+
+ans: 0x7fffffff and CF flag set
+
+
+
+
+-----------------------------------
+
+
+ROR -> Rotate OR
+
+rax=0x0123456789abcde
+ror rax, 8
+
+this will rotate 
+
+--------------------------------------------
+Control Operations :
+
+
+jmp Begin
+
+jnz PrintHw -> Not Zero
+
+
+-------------------------------------------
+
+Loops :
+
+Decrements ECX
+
+When ECX == 0 , Loops END 
+
+------------------------------------------
+
+Procdedures :
+
+When We Hit Call in GDB
+
+it pushesh the address of next instruction following call on the stack RSP
+
+and when we hit the RET instruction in Procdedure that pops ret value inside the EIP or RIP Resistors .
+
+-----------------------------------------------
+
+Leave command do exactly oppositve to the things happened in above code i.e in procdedure .
+
+---------------------------------------------
+
+String Operators :
+
+
+Scasb -> Compare 1 Bytes with AL (i.e 1 byte with AL )
+
+scasw -> Compare 2 Bytes with AX (i.e 2 bytes with AX)
+
+
+scasd -> compare 4 bytes with EAX
+
+scasq -> Compare 8 Bytes with RAX
+
+
+Compare: (By RSI with RDI)
+Cmpsb
+cmpsw
+cmpsd
+cmpsq
+
+
+
+
+--------------------------------------------
+Stack Frame Pointer :
+
+Whenever we create procedure or call procedure stack frame pointer is created and added to stack.
+
+ex:  push rbp  (base pointer) then mov rsp in rbp (stack pointer to base pointer)
+
+disassemble main
+Dump of assembler code for function main:
+   0x00000000004005d6 <+0>:	push   rbp
+   0x00000000004005d7 <+1>:	mov    rbp,rsp
+
+
+
+leave  -> Do Reverse of exact same happened above like mov rsp,rbp , pop rbp
+
+ret -> Indicates end of proc and instruct to take next instruction.
+
+----------------------------------------------
+
+Scan Compare Strings :
+
+
+
+cld -> clear direction flag
+
+lea rdi, [var1] -> Load effective area stores address of var1in rdi
+
+scasq -> if both of this match then [ZF] is set in EFLAGS in registars , ZF->ZERO FLAG.
+
+if didn't match then ZF flag is not set.
+
+
+scas and scasq are same.
+
+
+scas -> Compare memory to register ,
+
+cmps -> compare memory to memory
+
+memory -> Data which we moves in register 
+registar -> Address maybe not sure
+
+
+------------------------------------------------------------------
+
+Load , store ,move strings :
+
+
+loadsb to loadsq
+
+stosb to stosq
+
+movsb to movsq
+
+
+ex:
+
+
+mov -> Move memory to memory
+
+lea rsi, [HelloWord]
+lea rdi, [Copy]
+movsq
+
+(this will copy 8 bytes from rsi to rdi)
+
+
+rep -> Repeat loop depend on rcx value
+------------------------------
+
+define hook-stop
+
+x/s 0x600120
+end
+
+
+if
+
+rax            0x123456789abcdef
+
+xor rax,rax
+
+this will make rax 0.
+
+because comparing with own rax , no difference 
+
+0 0 -> 0
+0 1 -> 1  
+
+so no difference = 0
+
+-------------------------------------
+
+
+
+

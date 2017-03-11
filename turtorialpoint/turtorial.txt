@@ -1,0 +1,137 @@
+Valid for A to D
+
+RAX,EAX,AH,AL,AX : 64,32,16,8,0
+till
+RDX,EDX,DH,Dl,DX
+
+Operations:
+
+AX -> Arthemetic
+BX -> Index Addressing
+CX -> loop ex: Rcx,Ecx
+DX -> mul and div operations
+
+
+
+
+RAX,EAX -> it takes signals number like 4 for write
+RBX,EBX -> File Descriptor 
+RCX,ECX -> Message
+RDX,EDX -> Len
+
+int 0x80 -> syscall exit()
+
+
+
+
+
+POinters :
+
+IP : Instrunction p : Tells what next instruction is to exec
+
+SP : stack p : current possition of data or address in stack
+
+BP : Base p : DI N SI
+
+
+FLAGS :
+
+OF : Overflow : o of high order bit after arthmentic op
+
+DF : Direction : When DF = 0 it takes left to right,
+                  1 , right to left
+
+IF : Interrupt : it disable external interrupt when value is 0 like keyboard entires etc
+
+ZF : Zero : in arthmetic op , it it results in zero then 1 is set in Flags
+
+CF : Carry F : contains carry of 0 and 1 from high order bit after arthemetic op 
+
+
+
+--------------------------------
+
+Byte : 1 -> Stored as Ascii text so use text in db 
+ex: choice db "hello"
+Word : 2 -> dw 12345
+DWord : 4 -> dq 1234567898 -> dq 1.1234
+QWord : 8
+
+-------------------------------------
+
+suppose my_table is variable
+
+mov ebx, [my_table] ; stores effective addr of my_table in ebx
+mov [ebx], 111 ; my_table[0] = 111
+
+
+also 
+
+my_table times 10 dw 0 ; 10 word of 0 in my_table
+mov ebx, [my_table] ; address of my_table in ebx
+mov [ebx], 110 ; my_table[0] = 110
+add ebx, 2 ; ebx = ebx + 2  ; so this is different because we are not using value [] here
+mov [ebx], 123 ; my_table[1] = 123
+
+
+
+Allocating storage space for unserialize daa
+
+
+resb to resq (byte too quadword)
+
+resever a byte to reserve a quadword
+------------------------------------------------
+
+Whenever we want to add / subs ASCII Given value we must subs it with '0' and then add '0' with it
+
+Multiplaying:
+
+ AL x 8 bits = AH AL
+
+ AX x 16 bits = DX AX
+
+ EAX x 32 bits = EDX EAX
+
+-------------------------------------------------------
+
+
+CMP = Compare
+
+INC EDX
+CMP EDX, 10 ; compares whther EDX Reached to 10
+JLE LP1; if it is less than or equal to 10 , then jump to LP1
+
+Jumps :                        FLAG:
+ 
+JE/Jz : Jump equal or zero    ZF
+JNE/JNZ : not e or z          ZF
+JG/JNLE : Greator or not less /equal
+JGE/JNL : Jump greater equal / not less
+
+
+----------------------------------------------------------------
+
+Loops:
+
+ecx register contains loop count .
+it will run till it become zero
+
+----------------------------------
+
+Strings :
+
+movs : moves 1 byte from memory location to another
+
+lods : loads from meomory 
+
+STOS : stores data from registers(AL,AX,EAX) to memory.
+
+CMPS : Compare 2 data items in memory
+
+SCAS : compares the content of register with items in memory.
+
+-----------------------------
+Skipping Strings check this in Depth
+-------------------------------
+
