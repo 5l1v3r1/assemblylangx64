@@ -1,0 +1,291 @@
+Script started on Mon 30 Jan 2017 12:55:52 AM PST
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# gdb ./simpledemo  [A
+
+GNU gdb (Ubuntu 7.11-0ubuntu1) 7.11
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./simpledemo...done.
+(gdb) 
+(gdb) line 1
+Undefined command: "line".  Try "help".
+(gdb) line 1[K[K[K[Kst 1
+1	#include<stdio.h>
+2	#include<stdlib.h>
+3	
+4	int add(int x, int y)
+5	{
+6	        int z =10;
+7	
+8	        z = x + y;
+9	        return z;
+10	}
+(gdb) list 11
+6	        int z =10;
+7	
+8	        z = x + y;
+9	        return z;
+10	}
+11	
+12	main(int argc, char **argv)
+13	{
+14	        int a = atoi(argv[1]);
+15	        int b = atoi(argv[2]);
+(gdb) list 1
+1	#include<stdio.h>
+2	#include<stdlib.h>
+3	
+4	int add(int x, int y)
+5	{
+6	        int z =10;
+7	
+8	        z = x + y;
+9	        return z;
+10	}
+(gdb) 
+11	
+12	main(int argc, char **argv)
+13	{
+14	        int a = atoi(argv[1]);
+15	        int b = atoi(argv[2]);
+16	        int c;
+17	        char buffer[100];
+18	
+19	        gets(buffer);
+20	        puts(buffer);
+(gdb) run 10 20
+Starting program: /home/hussain/Desktop/assemyblylang/assembly-lang/simpledemo 10 20
+demo
+demo
+Sum of 10+20 = 30
+[Inferior 1 (process 37794) exited normally]
+(gdb) 
+(gdb) disassemble main[K(gdb) disassemble main
+Dump of assembler code for function main:
+   0x0000000000400667 <+0>:	push   %rbp
+   0x0000000000400668 <+1>:	mov    %rsp,%rbp
+   0x000000000040066b <+4>:	sub    $0x90,%rsp
+   0x0000000000400672 <+11>:	mov    %edi,-0x84(%rbp)
+   0x0000000000400678 <+17>:	mov    %rsi,-0x90(%rbp)
+   0x000000000040067f <+24>:	mov    %fs:0x28,%rax
+   0x0000000000400688 <+33>:	mov    %rax,-0x8(%rbp)
+   0x000000000040068c <+37>:	xor    %eax,%eax
+   0x000000000040068e <+39>:	mov    -0x90(%rbp),%rax
+   0x0000000000400695 <+46>:	add    $0x8,%rax
+   0x0000000000400699 <+50>:	mov    (%rax),%rax
+   0x000000000040069c <+53>:	mov    %rax,%rdi
+   0x000000000040069f <+56>:	callq  0x400520 <atoi@plt>
+   0x00000000004006a4 <+61>:	mov    %eax,-0x7c(%rbp)
+   0x00000000004006a7 <+64>:	mov    -0x90(%rbp),%rax
+   0x00000000004006ae <+71>:	add    $0x10,%rax
+   0x00000000004006b2 <+75>:	mov    (%rax),%rax
+   0x00000000004006b5 <+78>:	mov    %rax,%rdi
+   0x00000000004006b8 <+81>:	callq  0x400520 <atoi@plt>
+   0x00000000004006bd <+86>:	mov    %eax,-0x78(%rbp)
+   0x00000000004006c0 <+89>:	lea    -0x70(%rbp),%rax
+   0x00000000004006c4 <+93>:	mov    %rax,%rdi
+   0x00000000004006c7 <+96>:	mov    $0x0,%eax
+   0x00000000004006cc <+101>:	callq  0x400510 <gets@plt>
+   0x00000000004006d1 <+106>:	lea    -0x70(%rbp),%rax
+   0x00000000004006d5 <+110>:	mov    %rax,%rdi
+   0x00000000004006d8 <+113>:	callq  0x4004e0 <puts@plt>
+   0x00000000004006dd <+118>:	mov    -0x78(%rbp),%edx
+   0x00000000004006e0 <+121>:	mov    -0x7c(%rbp),%eax
+   0x00000000004006e3 <+124>:	mov    %edx,%esi
+   0x00000000004006e5 <+126>:	mov    %eax,%edi
+   0x00000000004006e7 <+128>:	callq  0x400646 <add>
+---Type <return> to continue, or q <return> to quit---disassemble main[7Prun 10 20[3Plist 11[Kne[C[Cst[C[C1[Krun 10 20disassemble main[K
+   0x00000000004006ec <+133>:	mov    %eax,-0x74(%rbp)
+   0x00000000004006ef <+136>:	mov    -0x74(%rbp),%ecx
+   0x00000000004006f2 <+139>:	mov    -0x78(%rbp),%edx
+   0x00000000004006f5 <+142>:	mov    -0x7c(%rbp),%eax
+   0x00000000004006f8 <+145>:	mov    %eax,%esi
+   0x00000000004006fa <+147>:	mov    $0x4007a4,%edi
+   0x00000000004006ff <+152>:	mov    $0x0,%eax
+   0x0000000000400704 <+157>:	callq  0x4004f0 <printf@plt>
+   0x0000000000400709 <+162>:	mov    $0x0,%edi
+   0x000000000040070e <+167>:	callq  0x400530 <exit@plt>
+End of assembler dump.
+(gdb) 
+(gdb) 
+(gdb) 
+(gdb) list 1
+1	#include<stdio.h>
+2	#include<stdlib.h>
+3	
+4	int add(int x, int y)
+5	{
+6	        int z =10;
+7	
+8	        z = x + y;
+9	        return z;
+10	}
+(gdb) 
+11	
+12	main(int argc, char **argv)
+13	{
+14	        int a = atoi(argv[1]);
+15	        int b = atoi(argv[2]);
+16	        int c;
+17	        char buffer[100];
+18	
+19	        gets(buffer);
+20	        puts(buffer);
+(gdb) break 8
+Breakpoint 1 at 0x400657: file SimpleDemo.c, line 8.
+(gdb) 
+Note: breakpoint 1 also set at pc 0x400657.
+Breakpoint 2 at 0x400657: file SimpleDemo.c, line 8.
+(gdb) run 10 20
+Starting program: /home/hussain/Desktop/assemyblylang/assembly-lang/simpledemo 10 20
+lol
+lol
+
+Breakpoint 1, add (x=10, y=20) at SimpleDemo.c:8
+8	        z = x + y;
+(gdb) pritn x
+Undefined command: "pritn".  Try "help".
+(gdb) print x
+$1 = 10
+(gdb) print y
+$2 = 20
+(gdb) 
+$3 = 20
+(gdb) info registers 
+rax            0xa	10
+rbx            0x0	0
+rcx            0x7ffff7b04a10	140737348913680
+rdx            0x14	20
+rsi            0x14	20
+rdi            0xa	10
+rbp            0x7fffffffe430	0x7fffffffe430
+rsp            0x7fffffffe430	0x7fffffffe430
+r8             0x7ffff7fde700	140737354000128
+r9             0x0	0
+r10            0x194	404
+r11            0x246	582
+r12            0x400550	4195664
+r13            0x7fffffffe5b0	140737488348592
+r14            0x0	0
+r15            0x0	0
+rip            0x400657	0x400657 <add+17>
+eflags         0x246	[ PF ZF IF ]
+cs             0x33	51
+ss             0x2b	43
+ds             0x0	0
+es             0x0	0
+fs             0x0	0
+gs             0x0	0
+(gdb) help x
+Examine memory: x/FMT ADDRESS.
+ADDRESS is an expression for the memory address to examine.
+FMT is a repeat count followed by a format letter and a size letter.
+Format letters are o(octal), x(hex), d(decimal), u(unsigned decimal),
+  t(binary), f(float), a(address), i(instruction), c(char), s(string)
+  and z(hex, zero padded on the left).
+Size letters are b(byte), h(halfword), w(word), g(giant, 8 bytes).
+The specified number of objects of the specified size are printed
+according to the format.
+
+Defaults for format and size letters are those previously used.
+Default count is 1.  Default address is following last thing printed
+with this command or "print".
+(gdb) x/10xb 0x7fffffffe430
+0x7fffffffe430:	0xd0	0xe4	0xff	0xff	0xff	0x7f	0x00	0x00
+0x7fffffffe438:	0xec	0x06
+(gdb) x/10xb 0x7fffffffe430[1P
+0x7fffffffe430:	0xd0
+(gdb) x/1xb 0x7fffffffe430[1@2[1@2[1P
+0x7fffffffe430:	0xd0	0xe4	0xff	0xff	0xff	0x7f	0x00	0x00
+0x7fffffffe438:	0xec	0x06	0x40	0x00
+(gdb) x/12xb 0x7fffffffe430[1P[1@0
+0x7fffffffe430:	0xd0	0xe4	0xff	0xff	0xff	0x7f	0x00	0x00
+0x7fffffffe438:	0xec	0x06
+(gdb) x/10xb 0x7fffffffe430[1P 0x7fffffffe430[C[C[C[C[C[C[C[C[C[C[Cw 0x7fffffffe430[C[C[C[C[C[C[C[C[C[C[C[C
+0x7fffffffe430:	0xffffe4d0	0x00007fff	0x004006ec	0x00000000
+0x7fffffffe440:	0xffffe5b8	0x00007fff	0x00000000	0x00000003
+0x7fffffffe450:	0x00000000	0x0000000a
+(gdb) list[K[K[K[Ks
+9	        return z;
+(gdb) s
+10	}
+(gdb) s
+main (argc=3, argv=0x7fffffffe5b8) at SimpleDemo.c:24
+24	        printf("Sum of %d+%d = %d\n",a, b, c);
+(gdb) s
+__printf (format=0x4007a4 "Sum of %d+%d = %d\n") at printf.c:28
+28	printf.c: No such file or directory.
+(gdb) s
+32	in printf.c
+(gdb) list 9
+4	in printf.c
+(gdb) s
+33	in printf.c
+(gdb) s
+32	in printf.c
+(gdb) s
+33	in printf.c
+(gdb) s
+_IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, format=0x4007a4 "Sum of %d+%d = %d\n", 
+    ap=ap@entry=0x7fffffffe368) at vfprintf.c:1267
+1267	vfprintf.c: No such file or directory.
+(gdb) s[Ks
+1275	in vfprintf.c
+(gdb) s
+1279	in vfprintf.c
+(gdb) s
+1290	in vfprintf.c
+(gdb) s
+1301	in vfprintf.c
+(gdb) s
+1312	in vfprintf.c
+(gdb) s
+__find_specmb (format=<optimized out>) at printf-parse.h:108
+108	printf-parse.h: No such file or directory.
+(gdb) s
+_IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, format=0x4007a4 "Sum of %d+%d = %d\n", 
+    ap=ap@entry=0x7fffffffe368) at vfprintf.c:1316
+1316	vfprintf.c: No such file or directory.
+(gdb) s
+1301	in vfprintf.c
+(gdb) s
+1312	in vfprintf.c
+(gdb) s
+__find_specmb (format=0x4007a4 "Sum of %d+%d = %d\n") at printf-parse.h:108
+108	printf-parse.h: No such file or directory.
+(gdb) s
+strchrnul () at ../sysdeps/x86_64/strchr.S:24
+24	../sysdeps/x86_64/strchr.S: No such file or directory.
+(gdb) s
+25	in ../sysdeps/x86_64/strchr.S
+(gdb) s
+26	in ../sysdeps/x86_64/strchr.S
+(gdb) s
+27	in ../sysdeps/x86_64/strchr.S
+(gdb) s
+28	in ../sysdeps/x86_64/strchr.S
+(gdb) s
+29	in ../sysdeps/x86_64/strchr.S
+(gdb) c
+Continuing.
+Sum of 10+20 = 30
+[Inferior 1 (process 37809) exited normally]
+(gdb) i[K
+The program is not being run.
+(gdb) infor [K[K registers 
+The program has no registers now.
+(gdb) quit
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# exit
+exit
+
+Script done on Mon 30 Jan 2017 01:17:46 AM PST

@@ -1,0 +1,40 @@
+Script started on Mon 30 Jan 2017 12:34:31 AM PST
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# ls[K[Kls
+secoundvideo.log  SimpleDemo.c
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# gcc 0[K-0[Kggdb -O[Ko simp ledemo SimpleDemo.c 
+[01m[KSimpleDemo.c:12:1:[m[K [01;35m[Kwarning: [m[Kreturn type defaults to ‘[01m[Kint[m[K’ [-Wimplicit-int]
+ main(int argc, char **argv)
+[01;32m[K ^[m[K
+[01m[KSimpleDemo.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[KSimpleDemo.c:19:9:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function ‘[01m[Kgets[m[K’ [-Wimplicit-function-declaration]
+         gets(buffer);
+[01;32m[K         ^[m[K
+/tmp/ccwmm3ag.o: In function `main':
+/home/hussain/Desktop/assemyblylang/assembly-lang/SimpleDemo.c:19: warning: the `gets' function is dangerous and should not be used.
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# [H[2J]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# ls
+secoundvideo.log  [0m[01;32msimpledemo[0m  SimpleDemo.c
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# ./simpledemo 10 2 0
+d
+d
+Sum of 10+20 = 30
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# [H[2J]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# ./simpledemo 10 200
+^C
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# ./simpledemo 10 200
+^Z
+[1]+  Stopped                 ./simpledemo 10 20
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# [H[2J]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# [H[2J]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# s
+s: command not found
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# [H[2J]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# ls
+secoundvideo.log  [0m[01;32msimpledemo[0m  SimpleDemo.c
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# exit
+exit
+There are stopped jobs.
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# [H[2J]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# ls
+secoundvideo.log  [0m[01;32msimpledemo[0m  SimpleDemo.c
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# ls
+secoundvideo.log  [0m[01;32msimpledemo[0m  SimpleDemo.c
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# [H[2J]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# ls
+secoundvideo.log  [0m[01;32msimpledemo[0m  SimpleDemo.c
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain/Desktop/assemyblylang/assembly-lang# cd ,,]
+bash: cd: ,,]: No such file or directory
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/assembly-langroot@ubuntu:/home/hussain
