@@ -1,0 +1,64 @@
+     1                                  ; Filename: Arithmetic.nasm
+     2                                  ; Author:  Vivek Ramachandran
+     3                                  ; Website:  http://securitytube.net
+     4                                  ; Training: http://securitytube-training.com 
+     5                                  ;
+     6                                  ;
+     7                                  ; Purpose: Arithmetic Instructions 
+     8                                  
+     9                                  global _start			
+    10                                  
+    11                                  section .text
+    12                                  _start:
+    13                                  
+    14                                  	mov rax, 0x00000000ffffffff
+    15          ******************       error: instruction not supported in 16-bit mode
+    16                                  	sal rax, 32
+    17          ******************       error: instruction not supported in 16-bit mode
+    18                                  	sal rax, 1
+    19          ******************       error: instruction not supported in 16-bit mode
+    20                                  
+    21 00000000 F8                      	clc	
+    22                                  	mov rax, 0x00000000ffffffff
+    23          ******************       error: instruction not supported in 16-bit mode
+    24                                  	shr rax, 1
+    25          ******************       error: instruction not supported in 16-bit mode
+    26                                  	shr rax, 31
+    27          ******************       error: instruction not supported in 16-bit mode
+    28                                  
+    29 00000001 F8                      	clc
+    30                                  	mov rax, 0x00000000ffffffff
+    31          ******************       error: instruction not supported in 16-bit mode
+    32                                  	sar rax, 1
+    33          ******************       error: instruction not supported in 16-bit mode
+    34 00000002 F8                      	clc
+    35                                  	mov rax, 0xffffffffffffffff
+    36          ******************       error: instruction not supported in 16-bit mode
+    37                                  	sar rax, 1
+    38          ******************       error: instruction not supported in 16-bit mode
+    39                                  
+    40 00000003 F8                      	clc
+    41                                  	mov rax, 0x0123456789abcdef
+    42          ******************       error: instruction not supported in 16-bit mode
+    43                                  	ror rax, 8
+    44          ******************       error: instruction not supported in 16-bit mode
+    45                                  	ror rax, 12
+    46          ******************       error: instruction not supported in 16-bit mode
+    47                                  	ror rax, 44
+    48          ******************       error: instruction not supported in 16-bit mode
+    49                                  
+    50                                  
+    51                                  	; exit the program gracefully  
+    52                                  
+    53                                  	mov rax, 0x3c
+    54          ******************       error: instruction not supported in 16-bit mode
+    55                                  	mov rdi, 0		
+    56          ******************       error: instruction not supported in 16-bit mode
+    57 00000004 0F05                    	syscall
+    58                                  
+    59                                  section .data
+    60                                  
+    61 00000000 1111111111111111        	var1 dq 0x1111111111111111
+    62 00000008 0000000000000000        	var2 dq 0x0
+    63                                  
+    64                                  

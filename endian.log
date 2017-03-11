@@ -1,0 +1,286 @@
+Script started on Sun 29 Jan 2017 08:34:09 AM PST
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# l[Kcatr[K edian[K[K[K[Kndian.
+endian.log   endian.nasm  
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# cat endian.nasm 
+global _start
+
+section .text
+
+_start:
+
+	; print on screen
+	mov rax, 1
+	mov rdi, 1
+	mov rsi, hello_world
+	mov rdx, length
+	syscall
+
+	; exit gracefully
+
+	mov rax, 60
+	mov rdi, 11
+	syscall
+
+section .data
+	hello_world: db 'Hello World Nigga',0xa
+	length: equ $-hello_world
+
+	var1: db 0x11,0x22,0x33,0x44,0x55,0x66,0x77,0x88
+
+
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# vi enm[Kdian.nasm 
+[?1049h[?1h=[1;24r[?12;25h[?12l[?25h[27m[23m[m[H[2J[?25l[24;1H"endian.nasm" 26L, 322C[1;1Hglobal _start
+
+section .text
+
+_start:[7;9H; print on screen[8;9Hmov rax, 1[9;9Hmov rdi, 1[10;9Hmov rsi, hello_world[11;9Hmov rdx, length[12;9Hsyscall[14;9H; exit gracefully[16;9Hmov rax, 60[17;9Hmov rdi, 11[18;9Hsyscall
+
+section .data[21;9Hhello_world: db 'Hello World Nigga',0xa[22;9Hlength: equ $-hello_world[1;1H[?12l[?25h[?25l[24;1H[1m-- INSERT --[m[24;13H[K[1;1H[?12l[?25h
+
+
+
+
+
+
+
+
+
+
+
+[?25l[8C[?12l[?25h[?25l[14;23r[14;1H[L[1;24r[14;1H[?12l[?25h[?25l[8C[?12l[?25h[?25lm[?12l[?25h[?25lo[?12l[?25h[?25lv[?12l[?25h[?25l [?12l[?25h[?25lr[?12l[?25h[?25la[?12l[?25h[?25lx[?12l[?25h[?25l,[?12l[?25h[?25l [?12l[?25h[?25l[[?12l[?25h[?25lv[?12l[?25h[?25la[?12l[?25h[?25lr[?12l[?25h[?25l1[?12l[?25h[?25l][?12l[?25h[?25l[15;23r[15;1H[L[1;24r[15;1H[?12l[?25h[24;1H[K[15;1H[?25l[?12l[?25h[?25l[24;1H[1m-- INSERT --[15;1H[?12l[?25h
+
+
+
+
+
+
+
+[?25l[1;23r[m[23;1H
+[1;24r[23;9Hlength: equ $-hello_world[?12l[?25h[?25l[1;23r[23;1H
+[1;24r[23;1H[?12l[?25h[?25l[1;23r[23;1H
+[1;24r[23;9Hvar1: db 0x11,0x22,0x33,0x44,0x55,0x66,0x77,0x88[?12l[?25h[?25l[1;23r[23;1H
+[1;24r[23;1H[?12l[?25h[?25l[1;23r[23;1H
+[1;24r[23;1H[?12l[?25h[22;1H[?25l[8C[?12l[?25h[?25lv[?12l[?25h[?25la[?12l[?25h[?25lr[?12l[?25h[?25l2[?12l[?25h[?25l:[?12l[?25h[?25l [?12l[?25h[?25ld[?12l[?25h[?25lv[?12l[?25h[?25l[22;16H[K[22;16H[?12l[?25h[?25lb[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25lx[?12l[?25h[?25l8[?12l[?25h[?25l8[?12l[?25h[?25l,[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25lx[?12l[?25h[?25l7[?12l[?25h[?25l7[?12l[?25h[?25l,[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25lx[?12l[?25h[?25l6[?12l[?25h[?25l6[?12l[?25h[?25l [?12l[?25h[?25l[?12l[?25h[?25l,[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25lx[?12l[?25h[?25l5[?12l[?25h[?25l5[?12l[?25h[?25l,[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25lx[?12l[?25h[?25l4[?12l[?25h[?25l4[?12l[?25h[?25l,[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25lx[?12l[?25h[?25l3[?12l[?25h[?25l3[?12l[?25h[?25l,[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25lx[?12l[?25h[?25l2[?12l[?25h[?25l2[?12l[?25h[?25l,[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25lx[?12l[?25h[?25l1[?12l[?25h[?25l1[?12l[?25h[?25l,[?12l[?25h[?25l0[?12l[?25h[?25l[22;65H[K[22;65H[?12l[?25h[?25l[22;64H[K[22;64H[?12l[?25h[21;57H[?25l 0x88[?12l[?25h0[22;55H
+[22;55H[21;55H[20;1H[19;34H[18;48H[17;14H[16;1H[15;16H[14;20H[13;20H[12;1H[11;26H[10;1H[9;24H
+[?25l[8C[?12l[?25h[?25lm[?12l[?25h[?25lo[?12l[?25h[?25lv[?12l[?25h[?25l [?12l[?25h[?25lr[?12l[?25h[?25lb[?12l[?25h[?25lx[?12l[?25h[?25l[11;23r[11;1H[L[1;24r[11;1H[?12l[?25h[10;1H[?25l[8C        mov rbx[10;9H[?12l[?25h[?25lmov rbx[10;17H[K[10;1H[?12l[?25h[8Cmov rbx[?25l,[?12l[?25h[?25l [?12l[?25h[?25l[[?12l[?25h[?25lv[?12l[?25h[?25la[?12l[?25h[?25lr[?12l[?25h[?25l2[?12l[?25h[?25l][?12l[?25h[24;1H[K[10;23H[?25l[?12l[?25h[?25l[24;1H:[?12l[?25hwq[?25l"endian.nasm" 29L, 415C written
+[?1l>[?12l[?25h[?1049l]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# cat endian.nasm 
+global _start
+
+section .text
+
+_start:
+
+	; print on screen
+	mov rax, 1
+	mov rdi, 1
+	mov rsi, hello_world
+	mov rdx, length
+	syscall
+	
+	mov rax, [var1]
+	mov rbx, [var2]
+
+	; exit gracefully
+
+	mov rax, 60
+	mov rdi, 11
+	syscall
+
+section .data
+	hello_world: db 'Hello World Nigga',0xa
+	length: equ $-hello_world
+
+	var1: db 0x11,0x22,0x33,0x44,0x55,0x66,0x77, 0x88
+	var2: db 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11
+
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# nasm -felf64 n[Kendian.nasmm -o endian.o
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# ld endian.p[Ko -o endian
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# ls
+[0m[01;32mdatatype[0m       datatypes.log  endian.nasm  [01;32mhello[0m       [01;34mport[0m
+datatype.nasm  [01;32mendian[0m         endian.o     hello.nasm
+datatype.o     endian.log     [01;34mGDB_Test[0m     hello.o
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# ./endian 
+Hello World Nigga
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# d[Kgdb ./endian -q
+Reading symbols from ./endian...(no debugging symbols found)...done.
+(gdb) s[K[H[2J(gdb) set disassembly-flavor intel
+(gdb) break _start
+Breakpoint 1 at 0x4000b0
+(gdb) run
+Starting program: /home/hussain/Desktop/assemyblylang/scripts/endian 
+
+Breakpoint 1, 0x00000000004000b0 in _start ()
+(gdb) disassemble 
+Dump of assembler code for function _start:
+=> 0x00000000004000b0 <+0>:	mov    eax,0x1
+   0x00000000004000b5 <+5>:	mov    edi,0x1
+   0x00000000004000ba <+10>:	movabs rsi,0x6000e8
+   0x00000000004000c4 <+20>:	mov    edx,0x12
+   0x00000000004000c9 <+25>:	syscall 
+   0x00000000004000cb <+27>:	mov    rax,QWORD PTR ds:0x6000fa
+   0x00000000004000d3 <+35>:	mov    rbx,QWORD PTR ds:0x600102
+   0x00000000004000db <+43>:	mov    eax,0x3c
+   0x00000000004000e0 <+48>:	mov    edi,0xb
+   0x00000000004000e5 <+53>:	syscall 
+End of assembler dump.
+(gdb) info variables 
+All defined variables:
+
+Non-debugging symbols:
+0x00000000006000e8  hello_world
+0x00000000006000fa  var1
+0x0000000000600102  var2
+0x000000000060010a  __bss_start
+0x000000000060010a  _edata
+0x0000000000600110  _end
+(gdb) x/8xb &var1
+0x6000fa:	0x11	0x22	0x33	0x44	0x55	0x66	0x77	0x88
+(gdb) x/8xb &var1[C[C[C[1P &var1h &var1
+0x6000fa:	0x2211	0x4433	0x6655	0x8877	0x7788	0x5566	0x3344	0x1122
+(gdb) x/8xh &var1[1P
+0x6000fa:	0x2211
+(gdb) x/xh &var1[1P &var1w &var1
+0x6000fa:	0x44332211
+(gdb) x/xw &var1[1P &var1g &var1
+0x6000fa:	0x8877665544332211
+(gdb) x/xg &var1[C[1P &var1g &var1[C[C[C[C[C[C[K2
+0x600102:	0x1122334455667788
+(gdb) disassemble 
+Dump of assembler code for function _start:
+=> 0x00000000004000b0 <+0>:	mov    eax,0x1
+   0x00000000004000b5 <+5>:	mov    edi,0x1
+   0x00000000004000ba <+10>:	movabs rsi,0x6000e8
+   0x00000000004000c4 <+20>:	mov    edx,0x12
+   0x00000000004000c9 <+25>:	syscall 
+   0x00000000004000cb <+27>:	mov    rax,QWORD PTR ds:0x6000fa
+   0x00000000004000d3 <+35>:	mov    rbx,QWORD PTR ds:0x600102
+   0x00000000004000db <+43>:	mov    eax,0x3c
+   0x00000000004000e0 <+48>:	mov    edi,0xb
+   0x00000000004000e5 <+53>:	syscall 
+End of assembler dump.
+(gdb) break * [K%[K$ript+42[K[K[C[C[C[C[C[C[1Pdisassemble [C[C[C[C[C[Cbreak *$ript+[1P+[C27
+Breakpoint 2 at 0x4000cb
+(gdb) c
+Continuing.
+Hello World Nigga
+
+Breakpoint 2, 0x00000000004000cb in _start ()
+(gdb) disassemble 
+Dump of assembler code for function _start:
+   0x00000000004000b0 <+0>:	mov    eax,0x1
+   0x00000000004000b5 <+5>:	mov    edi,0x1
+   0x00000000004000ba <+10>:	movabs rsi,0x6000e8
+   0x00000000004000c4 <+20>:	mov    edx,0x12
+   0x00000000004000c9 <+25>:	syscall 
+=> 0x00000000004000cb <+27>:	mov    rax,QWORD PTR ds:0x6000fa
+   0x00000000004000d3 <+35>:	mov    rbx,QWORD PTR ds:0x600102
+   0x00000000004000db <+43>:	mov    eax,0x3c
+   0x00000000004000e0 <+48>:	mov    edi,0xb
+   0x00000000004000e5 <+53>:	syscall 
+End of assembler dump.
+(gdb) info registers 
+rax            0x12	18
+rbx            0x0	0
+rcx            0x4000cb	4194507
+rdx            0x12	18
+rsi            0x6000e8	6291688
+rdi            0x1	1
+rbp            0x0	0x0
+rsp            0x7fffffffe5e0	0x7fffffffe5e0
+r8             0x0	0
+r9             0x0	0
+r10            0x0	0
+r11            0x202	514
+r12            0x0	0
+r13            0x0	0
+r14            0x0	0
+r15            0x0	0
+rip            0x4000cb	0x4000cb <_start+27>
+eflags         0x202	[ IF ]
+cs             0x33	51
+ss             0x2b	43
+ds             0x0	0
+es             0x0	0
+fs             0x0	0
+---Type <return> to continue, or q <return> to quit---next[K[K[K[K
+gs             0x0	0
+(gdb) nexti
+0x00000000004000d3 in _start ()
+(gdb) disassemble 
+Dump of assembler code for function _start:
+   0x00000000004000b0 <+0>:	mov    eax,0x1
+   0x00000000004000b5 <+5>:	mov    edi,0x1
+   0x00000000004000ba <+10>:	movabs rsi,0x6000e8
+   0x00000000004000c4 <+20>:	mov    edx,0x12
+   0x00000000004000c9 <+25>:	syscall 
+   0x00000000004000cb <+27>:	mov    rax,QWORD PTR ds:0x6000fa
+=> 0x00000000004000d3 <+35>:	mov    rbx,QWORD PTR ds:0x600102
+   0x00000000004000db <+43>:	mov    eax,0x3c
+   0x00000000004000e0 <+48>:	mov    edi,0xb
+   0x00000000004000e5 <+53>:	syscall 
+End of assembler dump.
+(gdb) info registers 
+rax            0x8877665544332211	-8613303245920329199
+rbx            0x0	0
+rcx            0x4000cb	4194507
+rdx            0x12	18
+rsi            0x6000e8	6291688
+rdi            0x1	1
+rbp            0x0	0x0
+rsp            0x7fffffffe5e0	0x7fffffffe5e0
+r8             0x0	0
+r9             0x0	0
+r10            0x0	0
+r11            0x202	514
+r12            0x0	0
+r13            0x0	0
+r14            0x0	0
+r15            0x0	0
+rip            0x4000d3	0x4000d3 <_start+35>
+eflags         0x202	[ IF ]
+cs             0x33	51
+ss             0x2b	43
+ds             0x0	0
+es             0x0	0
+fs             0x0	0
+---Type <return> to continue, or q <return> to quit---
+gs             0x0	0
+(gdb) 
+(gdb) nexti[Kio[K
+0x00000000004000db in _start ()
+(gdb) info registers 
+rax            0x8877665544332211	-8613303245920329199
+rbx            0x1122334455667788	1234605616436508552
+rcx            0x4000cb	4194507
+rdx            0x12	18
+rsi            0x6000e8	6291688
+rdi            0x1	1
+rbp            0x0	0x0
+rsp            0x7fffffffe5e0	0x7fffffffe5e0
+r8             0x0	0
+r9             0x0	0
+r10            0x0	0
+r11            0x202	514
+r12            0x0	0
+r13            0x0	0
+r14            0x0	0
+r15            0x0	0
+rip            0x4000db	0x4000db <_start+43>
+eflags         0x202	[ IF ]
+cs             0x33	51
+ss             0x2b	43
+ds             0x0	0
+es             0x0	0
+fs             0x0	0
+---Type <return> to continue, or q <return> to quit---
+gs             0x0	0
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 5456] will be killed.
+
+Quit anyway? (y or n) e[Ky
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/scriptsroot@ubuntu:/home/hussain/Desktop/assemyblylang/scripts# exit
+exit
+
+Script done on Sun 29 Jan 2017 08:45:43 AM PST
