@@ -1,0 +1,116 @@
+Script started on Tue 31 Jan 2017 12:51:28 AM PST
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/shellcode-basicsroot@ubuntu:/home/hussain/Desktop/assemyblylang/shellcode-basics# cat[K[K[K./he[K[Kshellcode
+Shellcode Length:  27
+# sga   whoami
+root
+# 
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/shellcode-basicsroot@ubuntu:/home/hussain/Desktop/assemyblylang/shellcode-basics# [H[2J]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/shellcode-basicsroot@ubuntu:/home/hussain/Desktop/assemyblylang/shellcode-basics# ls
+023.log  [0m[01;34mfiles-shellcode[0m  [01;32mshellcode[0m  [01;32mshellcode.c[0m
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/shellcode-basicsroot@ubuntu:/home/hussain/Desktop/assemyblylang/shellcode-basics# gdb -q ./shellcode
+Reading symbols from ./shellcode...(no debugging symbols found)...done.
+(gdb) disassemble main
+Dump of assembler code for function main:
+   0x0000000000400566 <+0>:	push   %rbp
+   0x0000000000400567 <+1>:	mov    %rsp,%rbp
+   0x000000000040056a <+4>:	sub    $0x10,%rsp
+   0x000000000040056e <+8>:	mov    $0x601040,%edi
+   0x0000000000400573 <+13>:	callq  0x400430 <strlen@plt>
+   0x0000000000400578 <+18>:	mov    %eax,%esi
+   0x000000000040057a <+20>:	mov    $0x400634,%edi
+   0x000000000040057f <+25>:	mov    $0x0,%eax
+   0x0000000000400584 <+30>:	callq  0x400440 <printf@plt>
+   0x0000000000400589 <+35>:	movq   $0x601040,-0x8(%rbp)
+   0x0000000000400591 <+43>:	mov    -0x8(%rbp),%rdx
+   0x0000000000400595 <+47>:	mov    $0x0,%eax
+   0x000000000040059a <+52>:	callq  *%rdx
+   0x000000000040059c <+54>:	mov    $0x0,%eax
+   0x00000000004005a1 <+59>:	leaveq 
+   0x00000000004005a2 <+60>:	retq   
+End of assembler dump.
+(gdb) break main
+Breakpoint 1 at 0x40056a
+(gdb) set disassembly-flavor intel
+(gdb) run
+Starting program: /home/hussain/Desktop/assemyblylang/shellcode-basics/shellcode 
+
+Breakpoint 1, 0x000000000040056a in main ()
+(gdb) diase[K[K[Ksassemble main
+Dump of assembler code for function main:
+   0x0000000000400566 <+0>:	push   rbp
+   0x0000000000400567 <+1>:	mov    rbp,rsp
+=> 0x000000000040056a <+4>:	sub    rsp,0x10
+   0x000000000040056e <+8>:	mov    edi,0x601040
+   0x0000000000400573 <+13>:	call   0x400430 <strlen@plt>
+   0x0000000000400578 <+18>:	mov    esi,eax
+   0x000000000040057a <+20>:	mov    edi,0x400634
+   0x000000000040057f <+25>:	mov    eax,0x0
+   0x0000000000400584 <+30>:	call   0x400440 <printf@plt>
+   0x0000000000400589 <+35>:	mov    QWORD PTR [rbp-0x8],0x601040
+   0x0000000000400591 <+43>:	mov    rdx,QWORD PTR [rbp-0x8]
+   0x0000000000400595 <+47>:	mov    eax,0x0
+   0x000000000040059a <+52>:	call   rdx
+   0x000000000040059c <+54>:	mov    eax,0x0
+   0x00000000004005a1 <+59>:	leave  
+   0x00000000004005a2 <+60>:	ret    
+End of assembler dump.
+(gdb) break *0x000000000040059a
+Breakpoint 2 at 0x40059a
+(gdb) c
+Continuing.
+Shellcode Length:  27
+
+Breakpoint 2, 0x000000000040059a in main ()
+(gdb) x/xg $rdx
+0x601040 <code>:	0x91969dd1bb48c031
+(gdb) x/xg $rdx[1P $rdxb $rdx
+0x601040 <code>:	0x31
+(gdb) x/xb $rdx[C[1@1[1@0
+Invalid number "10b".
+(gdb) x/x10b $rdx[1P[1P[1@1[1@0
+0x601040 <code>:	0x31	0xc0	0x48	0xbb	0xd1	0x9d	0x96	0x91
+0x601048 <code+8>:	0xd0	0x8c
+(gdb) break *0x601040
+Breakpoint 3 at 0x601040
+(gdb) dc[K[Kc
+Continuing.
+
+Breakpoint 3, 0x0000000000601040 in code ()
+(gdb) cbreak *0x601040[C[C[C[C[C[C[4Px/10xb $rdxx10[C[C[C[C[C[C[2P[C[C[C[C[C[Cg[C[C[C[C[C[C[C[C[C[C[Cc[Kbreak *0x000000000040059a[C[C[C[C[C[Cc[Kx/xg $rdxb[C[C[C[C[C[2@10[C[C[C[C[C[C10x[C[C[C[C[C[C[C[C[C[C[C[Cbreak *0x601040[C[C[C[C[C[Cc[K[Kdiase[K[Ks[Ks[K[Kssas[K[K[K
+disable      disassemble  disconnect   display      
+(gdb) dis[Kassemb[K[K[K[K[K[K[Kisassemble 
+Dump of assembler code for function code:
+=> 0x0000000000601040 <+0>:	xor    eax,eax
+   0x0000000000601042 <+2>:	movabs rbx,0xff978cd091969dd1
+   0x000000000060104c <+12>:	neg    rbx
+   0x000000000060104f <+15>:	push   rbx
+   0x0000000000601050 <+16>:	push   rsp
+   0x0000000000601051 <+17>:	pop    rdi
+   0x0000000000601052 <+18>:	cdq    
+   0x0000000000601053 <+19>:	push   rdx
+   0x0000000000601054 <+20>:	push   rdi
+   0x0000000000601055 <+21>:	push   rsp
+   0x0000000000601056 <+22>:	pop    rsi
+   0x0000000000601057 <+23>:	mov    al,0x3b
+   0x0000000000601059 <+25>:	syscall 
+   0x000000000060105b <+27>:	add    BYTE PTR [rax],al
+End of assembler dump.
+(gdb) quit[K[K[K[Kc
+Continuing.
+process 3030 is executing new program: /bin/dash
+Error in re-setting breakpoint 1: Function "main" not defined.
+Warning:
+Cannot insert breakpoint 2.
+Cannot access memory at address 0x40059a
+Cannot insert breakpoint 3.
+Cannot access memory at address 0x601040
+
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 3030] will be killed.
+
+Quit anyway? (y or n) y
+]0;root@ubuntu: /home/hussain/Desktop/assemyblylang/shellcode-basicsroot@ubuntu:/home/hussain/Desktop/assemyblylang/shellcode-basics# exit
+exit
+
+Script done on Tue 31 Jan 2017 12:58:16 AM PST
